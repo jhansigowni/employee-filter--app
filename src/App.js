@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import EmployeeList from './EmployeeList';
+import Filter from './Filter';
+import employees from './employees';
 
-function App() {
+const App = () => {
+  const [filteredDepartment, setFilteredDepartment] = useState('');
+
+  const handleFilterChange = (department) => {
+    setFilteredDepartment(department);
+  };
+
+  const filteredEmployees =
+    filteredDepartment === ''
+      ? employees
+      : employees.filter((employee) => employee.department === filteredDepartment);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Filter onFilterChange={handleFilterChange} />
+      <EmployeeList employees={filteredEmployees} />
     </div>
   );
-}
+};
 
 export default App;
